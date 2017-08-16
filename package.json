@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/xgbuils/filter-arraylike-iterable#readme",
   "devDependencies": {
-    "babel-register": "^6.24.1",
+    "babel-register": "^6.26.0",
     "coveralls": "^2.13.1",
     "eslint": "^4.3.0",
     "npm-check": "^5.4.5",
