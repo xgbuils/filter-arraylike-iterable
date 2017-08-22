@@ -1,3 +1,5 @@
+const InmutableArray = require('array-inmutable')
+
 function filter (p) {
     const obj = Object.create(this.constructor.prototype)
     obj.ps = this.ps.push(p)
@@ -7,34 +9,7 @@ function filter (p) {
 
 function FilterArrayLikeIterable (iterable) {
     this.iterable = iterable
-    this.ps = createInmutableRawArray([], 0)
-}
-
-function push (val) {
-    const length = this.length
-    let array = this.array
-    if (array.length > length) {
-        array = array.concat([])
-    }
-    array[length] = val
-    return createInmutableRawArray(array, length + 1)
-}
-
-function createInmutableRawArray (array, length) {
-    return {
-        array,
-        push,
-        length
-    }
-}
-
-function every (p, length, arr) {
-    for (let i = 0; i < length; ++i) {
-        if (!p(arr[i])) {
-            return false
-        }
-    }
-    return true
+    this.ps = InmutableArray([])
 }
 
 Object.defineProperties(FilterArrayLikeIterable.prototype, {
@@ -48,7 +23,7 @@ Object.defineProperties(FilterArrayLikeIterable.prototype, {
             const ps = this.ps
             for (let i = 0; i < length; ++i) {
                 const val = iterable[i]
-                if (every(p => p(val), ps.length, ps.array)) {
+                if (ps.every(p => p(val))) {
                     yield val
                 }
             }

@@ -40,5 +40,8 @@
   },
   "pre-commit": {
     "run": "test"
+  },
+  "dependencies": {
+    "array-inmutable": "^0.1.0"
   }
 }
