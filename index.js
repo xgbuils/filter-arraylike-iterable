@@ -12,19 +12,30 @@ function FilterArrayLikeIterable (iterable) {
     this.ps = InmutableArray([])
 }
 
+function apply (value) {
+    return this.ps.every(p => p(value)) ? {value} : undefined
+}
+
 Object.defineProperties(FilterArrayLikeIterable.prototype, {
     filter: {
         value: filter
     },
     [Symbol.iterator]: {
-        * value () {
+        value () {
+            const self = this
             const iterable = this.iterable
             const length = iterable.length
-            const ps = this.ps
-            for (let i = 0; i < length; ++i) {
-                const val = iterable[i]
-                if (ps.every(p => p(val))) {
-                    yield val
+            let i = 0
+            return {
+                next () {
+                    while (i < length) {
+                        const status = apply.call(self, iterable[i])
+                        ++i
+                        if (status) {
+                            return status
+                        }
+                    }
+                    return {done: true}
                 }
             }
         }
