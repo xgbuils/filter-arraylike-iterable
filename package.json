@@ -1,6 +1,6 @@
 {
   "name": "filter-arraylike-iterable",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "array like iterable decorated with filter method",
   "main": "index.js",
   "scripts": {
